@@ -4,7 +4,7 @@
 # If we meet some day, and you think this stuff is worth it, you can buy me a beer in return 
 #                                                                        —※Vysakh P Pillai※
 
-import os
+import os,sys
 import shutil 
 import re
 import argparse
@@ -87,21 +87,21 @@ def rename_project_folder(path,nProject):
 def check_project(path,nProject):
     if not os.path.isdir(path):
         print(f'{Fore.RED}Project path does not exist')
-        exit(-1)
+        sys.exit(-1)
     if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_\-]+$', nProject):
         print(f'{Fore.RED}New project name is invalid')
-        exit(-2)
+        sys.exit(-2)
     if not os.path.basename(path).endswith('.X'):
         print(f'{Fore.RED}Invalid project path. Provide path till .X')
-        exit(-3)
+        sys.exit(-3)
     
 def check_configuration(config,nConfig):
     if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_\-]+$', nConfig):
         print(f'{Fore.RED}New config name is invalid')
-        exit(-4)
+        sys.exit(-4)
     if not re.match(r'^[a-zA-Z_][a-zA-Z0-9_\-]+$', config):
         print(f'{Fore.RED}Current config name is invalid')
-        exit(-5)
+        sys.exit(-5)
 
 if __name__ == "__main__":
     init(autoreset=True)

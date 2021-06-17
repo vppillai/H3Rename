@@ -26,7 +26,7 @@ required arguments:
                         New config name
 ```
 
- > **Note:** If your project path and project display name are different, make sure you pass teh correct argument to the `-l` flag
+ > **Note:** If your project path and project display name are different, make sure you pass teh correct argument to the `-l` flag. While renaming with `-l`, teh project path will also be updated to match the new project name. In case you want the path to be different, it (The .X folder) can be directly renamed in file explorer. 
 
 ## EXE release
 

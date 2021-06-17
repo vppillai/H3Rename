@@ -12,7 +12,7 @@ from colorama import init, Fore, Back, Style
 from lxml import etree
 import yaml
 
-__version__="v1.0.0"
+__version__="v1.1.0"
 
 def replace_project_configuration(path,config,nConfig):
     #replace the project name present in config for programmer to go
@@ -28,15 +28,18 @@ def replace_configuration(path,config,nConfig):
     os.rename(f'{path}//nbproject//configurations_new.xml',f'{path}//nbproject//configurations.xml')
 
 
-def update_project_xml(path,nProject,config,nConfig):
+def update_project_xml(path,nProject,config,nConfig,inProjectName):
     nsMap={"ns":"http://www.netbeans.org/ns/project/1",
             "mns":'http://www.netbeans.org/ns/make-project/1'}
 
     projectTree = etree.parse(f'{path}//nbproject//project.xml')
     project=projectTree.getroot()
 
+    if not inProjectName:
+        inProjectName=os.path.basename(path)[:-2]
+
     projName=project.findall('ns:configuration/mns:data/mns:name',nsMap)[0]
-    if projName.text==os.path.basename(path)[:-2]:
+    if projName.text==inProjectName:
         projName.text=nProject
 
     for conf in project.findall('ns:configuration/mns:data/mns:confList',nsMap):
@@ -107,11 +110,12 @@ if __name__ == "__main__":
     init(autoreset=True)
     parser = argparse.ArgumentParser(
         description=f"Tool to rename Harmon3 MPLABX projects. {Fore.LIGHTMAGENTA_EX}{__version__}{Fore.RESET}", prog="H3Rename")
+    parser.add_argument('-l', '--projectName', dest='projectName', help='display name of the project if different from .X path')
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument('-p', '--path', dest='path', help='Location of Project up to the .X', required=True)
-    requiredNamed.add_argument('-P', '--nProject', dest='nProject', help='updated project name without the .X', required=True)
+    requiredNamed.add_argument('-n', '--nProject', dest='nProject', help='updated project name without the .X', required=True)
     requiredNamed.add_argument('-c', '--config', dest='config', help='Current config name', required=True)
-    requiredNamed.add_argument('-C', '--nConfig', dest='nConfig', help='New config name', required=True)
+    requiredNamed.add_argument('-x', '--nConfig', dest='nConfig', help='New config name', required=True)
     args = parser.parse_args()
 
     args.path=os.path.abspath(args.path)
@@ -119,7 +123,7 @@ if __name__ == "__main__":
     check_project(args.path,args.nProject)    
     check_configuration(args.config,args.nConfig)
     replace_configuration(args.path,args.config,args.nConfig)
-    update_project_xml(args.path,args.nProject,args.config,args.nConfig)
+    update_project_xml(args.path,args.nProject,args.config,args.nConfig,args.projectName)
     update_settings_yml(args.path,args.nProject,args.config,args.nConfig)
     update_project_yml(args.path,args.nProject,args.config,args.nConfig)
     rename_mhc_folder(args.path,args.nProject,args.config,args.nConfig)

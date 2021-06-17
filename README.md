@@ -7,22 +7,26 @@ _Tested with : MPLABX `5.45` , Harmony Launcher `3.6.4`_
 ## Running the tool
 
 ```bash
-usage: H3Rename [-h] -p PATH -P NPROJECT -c CONFIG -C NCONFIG
+usage: H3Rename [-h] [-l PROJECTNAME] -p PATH -n NPROJECT -c CONFIG -x NCONFIG
 
-Tool to rename Harmon3 MPLABX projects. v1.0.0
+Tool to rename Harmon3 MPLABX projects. v1.1.0
 
 optional arguments:
   -h, --help            show this help message and exit
+  -l PROJECTNAME, --projectName PROJECTNAME
+                        display name of the project if different from .X path
 
 required arguments:
   -p PATH, --path PATH  Location of Project up to the .X
-  -P NPROJECT, --nProject NPROJECT
+  -n NPROJECT, --nProject NPROJECT
                         updated project name without the .X
   -c CONFIG, --config CONFIG
                         Current config name
-  -C NCONFIG, --nConfig NCONFIG
+  -x NCONFIG, --nConfig NCONFIG
                         New config name
 ```
+
+ > **Note:** If your project path and project display name are different, make sure you pass teh correct argument to the `-l` flag
 
 ## EXE release
 

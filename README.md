@@ -32,7 +32,9 @@ required arguments:
 
 The executable was created using pyinstaller for people who have difficulty installing python.
 
+```bash
 pyinstaller --onefile .\H3Rename.py -i .\favicon.ico --clean
+```
 
 ## License
 
